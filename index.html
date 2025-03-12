@@ -40,22 +40,17 @@
         document.getElementById("pedidoForm").addEventListener("submit", function(event) {
             event.preventDefault();
 
-            var datos = {
-                nombre: document.getElementById("nombre").value,
-                producto: document.getElementById("producto").value,
-                cantidad: document.getElementById("cantidad").value,
-                total: document.getElementById("total").value
-            };
+            var formData = new FormData();
+            formData.append("nombre", document.getElementById("nombre").value);
+            formData.append("producto", document.getElementById("producto").value);
+            formData.append("cantidad", document.getElementById("cantidad").value);
+            formData.append("total", document.getElementById("total").value);
 
             var url = "https://script.google.com/macros/s/AKfycbyq2zPCsAERHHYrxfse4EDcLC6cDNMtld6PXSCvtK-sht7N_wjO_OH0TpE4d3bD80Pgfw/exec";
 
             fetch(url, {
                 method: "POST",
-                mode: "cors",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify(datos)
+                body: formData // Enviamos datos como FormData para evitar CORS
             })
             .then(response => response.json())
             .then(data => {
@@ -70,3 +65,4 @@
     </script>
 </body>
 </html>
+
